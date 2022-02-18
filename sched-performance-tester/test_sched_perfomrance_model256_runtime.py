@@ -93,10 +93,16 @@ for i in xrange(0,NUM_EXPERIMENTS): #1e7
   subprocess.call(['./sched-simulator-runtime xmls/plat_day.xml xmls/deployment_day.xml -wfp3 -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)
   subprocess.call(['./sched-simulator-runtime xmls/plat_day.xml xmls/deployment_day.xml -unicef -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)
   subprocess.call(['./sched-simulator-runtime xmls/plat_day.xml xmls/deployment_day.xml -spt -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)  
-  subprocess.call(['./sched-simulator-runtime xmls/plat_day.xml xmls/deployment_day.xml -f4 -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)
-  subprocess.call(['./sched-simulator-runtime xmls/plat_day.xml xmls/deployment_day.xml -f3 -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)
-  subprocess.call(['./sched-simulator-runtime xmls/plat_day.xml xmls/deployment_day.xml -f2 -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)
-  subprocess.call(['./sched-simulator-runtime xmls/plat_day.xml xmls/deployment_day.xml -f1 -nt '+str(number_of_tasks)], shell=True, stdout=_buffer) 
+  # subprocess.call(['./sched-simulator-runtime xmls/plat_day.xml xmls/deployment_day.xml -f4 -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)
+  # subprocess.call(['./sched-simulator-runtime xmls/plat_day.xml xmls/deployment_day.xml -f3 -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)
+  # subprocess.call(['./sched-simulator-runtime xmls/plat_day.xml xmls/deployment_day.xml -f2 -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)
+  # subprocess.call(['./sched-simulator-runtime xmls/plat_day.xml xmls/deployment_day.xml -f1 -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)
+
+  subprocess.call(['./sched-simulator-runtime xmls/plat_day.xml xmls/deployment_day.xml -quartic -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)
+  subprocess.call(['./sched-simulator-runtime xmls/plat_day.xml xmls/deployment_day.xml -cubic -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)
+  subprocess.call(['./sched-simulator-runtime xmls/plat_day.xml xmls/deployment_day.xml -quadratic -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)
+  subprocess.call(['./sched-simulator-runtime xmls/plat_day.xml xmls/deployment_day.xml -linear -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)
+
   _buffer.close()
 
   _buffer = open("plot-temp.dat", "r")
@@ -203,8 +209,9 @@ axes.set_xlabel('Scheduling Policies', fontsize=45)
 axes.set_ylabel('Average Bounded Slowdown',  fontsize=45)
 
 # add x-tick labels
-xticklabels=['FCFS', 'WFP', 'UNI', 'SPT', 'F4', 'F3', 'F2', 'F1']
-plt.setp(axes, xticks=[y+1 for y in range(len(all_data))], xticklabels=['FCFS', 'WFP', 'UNI', 'SPT', 'F4', 'F3', 'F2', 'F1'])
+#xticklabels=['FCFS', 'WFP', 'UNI', 'SPT', 'F4', 'F3', 'F2', 'F1']
+xticklabels=['FCFS', 'WFP', 'UNI', 'SPT', 'Quartic', 'Cubic', 'Quadratic', 'Linear']
+plt.setp(axes, xticks=[y+1 for y in range(len(all_data))], xticklabels=xticklabels)
 
 plt.tick_params(axis='both', which='major', labelsize=45)
 plt.tick_params(axis='both', which='minor', labelsize=45)
