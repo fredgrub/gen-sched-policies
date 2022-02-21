@@ -210,7 +210,7 @@ axes.set_ylabel('Average Bounded Slowdown',  fontsize=45)
 
 # add x-tick labels
 #xticklabels=['FCFS', 'WFP', 'UNI', 'SPT', 'F4', 'F3', 'F2', 'F1']
-xticklabels=['FCFS', 'WFP', 'UNI', 'SPT', 'Quartic', 'Cubic', 'Quadratic', 'Linear']
+xticklabels=['FCFS', 'WFP', 'UNI', 'SPT', '4th', '3th', '2nd', '1st']
 plt.setp(axes, xticks=[y+1 for y in range(len(all_data))], xticklabels=xticklabels)
 
 plt.tick_params(axis='both', which='major', labelsize=45)
