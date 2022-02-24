@@ -45,6 +45,10 @@ msg_error_t test_all(const char *platform_file,
 #define F3 7
 #define F2 8
 #define F1 9
+#define LINEAR 11
+#define QUADRATIC 12
+#define CUBIC 13
+#define QUARTIC 14
 
 int BF = 0;
 
@@ -271,6 +275,18 @@ void sortTasksQueue(double* runtimes, int* cores, int* submit, double* req, int*
       case F1:
           h_values[i] = (-0.0155183403 * log10(req[i])) * (-0.0005149209 * cores[i]) + (0.0069596182 * log10(submit[i])); //256nodes
           break; 
+      case LINEAR:
+          h_values[i] = 3.16688932E-02 + (1.24214915E-07 * runtimes[i]) + (3.10222317E-05 * cores[i]) + (-1.62730301E-07 * submit[i]);
+          break;
+      case QUADRATIC:
+          h_values[i] = 3.59070690E-02 + (3.57653837E-07 * runtimes[i]) + (-3.05321285E-05 * cores[i]) + (-4.32808767E-07 * submit[i]) + (-3.68598108E-12 * pow(runtimes[i], 2)) + (1.46361083E-07 * pow(cores[i], 2)) + (2.94999301E-12 * pow(submit[i], 2)) + (4.79106778E-10*runtimes[i] * cores[i]);
+          break;
+      case CUBIC:
+          h_values[i] = 4.67418773E-02 + (-4.81802528E-07 * runtimes[i]) + (-1.15303778E-04 * cores[i]) + (-7.87610347E-07 * submit[i]) + (1.53466450E-11 * pow(runtimes[i], 2)) + (5.38934299E-07 * pow(cores[i], 2)) + (1.09327118E-11 * pow(submit[i], 2)) + (6.22592744E-09*runtimes[i] * cores[i]) + (-8.63717255E-17 * pow(runtimes[i], 3)) + (-1.11952596E-09 * pow(cores[i], 3)) + (-4.02436547E-17 * pow(submit[i], 3)) + (-9.86495253E-14*pow(runtimes[i], 2) * cores[i]) + (-1.26807861E-12*runtimes[i] * pow(cores[i], 2));
+          break;
+      case QUARTIC:
+          h_values[i] = 4.72838610E-02 + (-9.61006496E-07 * runtimes[i]) + (-3.28918539E-05 * cores[i]) + (-6.45449471E-07 * submit[i]) + (4.39627291E-11 * pow(runtimes[i], 2)) + (5.47146571E-07 * pow(cores[i], 2)) + (5.34134103E-12 * pow(submit[i], 2)) + (-3.18967511E-10*runtimes[i] * cores[i]) + (-6.13044443E-16 * pow(runtimes[i], 3)) + (-6.44599476E-09 * pow(cores[i], 3)) + (2.88157111E-17 * pow(submit[i], 3)) + (-1.01006076E-14*pow(runtimes[i], 2) * cores[i]) + (3.94382788E-11*runtimes[i] * pow(cores[i], 2)) + (2.63718783E-21 * pow(runtimes[i], 4)) + (1.74580477E-11 * pow(cores[i], 4)) + (-2.53673187E-22 * pow(submit[i], 3)) + (-3.64919385E-19*pow(runtimes[i], 3) * cores[i]) + (-9.70929357e-14*pow(cores[i], 3) * runtimes[i]) + (-1.17485825E-16*pow(runtimes[i] * cores[i], 2));
+          break;
     }
   if(VERBOSE)
     XBT_INFO("Score for \"Task_%d\" [r=%.1f,c=%d,s=%d,est=%.1f]=%.7f", orig_pos[i], runtimes[i], cores[i], submit[i], req[i], h_values[i]);	
@@ -766,6 +782,18 @@ int main(int argc, char *argv[])
       }
       if (strcmp(argv[i], "-f1") == 0){
         chosen_policy = F1;
+      }
+      if (strcmp(argv[i], "-linear") == 0){
+        chosen_policy = LINEAR;
+      }
+      if (strcmp(argv[i], "-quadratic") == 0){
+        chosen_policy = QUADRATIC;
+      }
+      if (strcmp(argv[i], "-cubic") == 0){
+        chosen_policy = CUBIC;
+      }
+      if (strcmp(argv[i], "-quartic") == 0){
+        chosen_policy = QUARTIC;
       }
       if (strcmp(argv[i], "-nt") == 0){
         number_of_tasks = atoi(argv[i+1]);

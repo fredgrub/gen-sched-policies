@@ -101,10 +101,10 @@ for i in xrange(0,NUM_EXPERIMENTS): #1e7
   subprocess.call(['./sched-simulator-estimate-backfilling xmls/plat_day.xml xmls/deployment_day_1024.xml -wfp3 -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)
   subprocess.call(['./sched-simulator-estimate-backfilling xmls/plat_day.xml xmls/deployment_day_1024.xml -unicef -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)
   subprocess.call(['./sched-simulator-estimate-backfilling xmls/plat_day.xml xmls/deployment_day_1024.xml -spt -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)
-  subprocess.call(['./sched-simulator-estimate-backfilling xmls/plat_day.xml xmls/deployment_day_1024.xml -f4 -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)
-  subprocess.call(['./sched-simulator-estimate-backfilling xmls/plat_day.xml xmls/deployment_day_1024.xml -f3 -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)
+  # subprocess.call(['./sched-simulator-estimate-backfilling xmls/plat_day.xml xmls/deployment_day_1024.xml -f4 -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)
+  # subprocess.call(['./sched-simulator-estimate-backfilling xmls/plat_day.xml xmls/deployment_day_1024.xml -f3 -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)
   subprocess.call(['./sched-simulator-estimate-backfilling xmls/plat_day.xml xmls/deployment_day_1024.xml -f2 -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)
-  subprocess.call(['./sched-simulator-estimate-backfilling xmls/plat_day.xml xmls/deployment_day_1024.xml -f1 -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)  
+  subprocess.call(['./sched-simulator-estimate-backfilling xmls/plat_day.xml xmls/deployment_day_1024.xml -linear -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)  
   _buffer.close()
 
   _buffer = open("plot-temp.dat", "r")
@@ -115,8 +115,8 @@ for i in xrange(0,NUM_EXPERIMENTS): #1e7
   slow_sjf.append(float(lines[3])) 
   slow_c3.append(float(lines[4]))
   slow_c4.append(float(lines[5]))
-  slow_c5.append(float(lines[6]))
-  slow_c6.append(float(lines[7]))
+  # slow_c5.append(float(lines[6]))
+  # slow_c6.append(float(lines[7]))
   _buffer.close()
   
 
@@ -127,8 +127,8 @@ performance.append(np.mean(slow_unicef))
 performance.append(np.mean(slow_sjf))
 performance.append(np.mean(slow_c3))
 performance.append(np.mean(slow_c4))
-performance.append(np.mean(slow_c5))
-performance.append(np.mean(slow_c6))
+# performance.append(np.mean(slow_c5))
+# performance.append(np.mean(slow_c6))
 
 error = []
 error.append(np.std(slow_fcfs))
@@ -137,8 +137,8 @@ error.append(np.std(slow_unicef))
 error.append(np.std(slow_sjf))
 error.append(np.std(slow_c3))
 error.append(np.std(slow_c4))
-error.append(np.std(slow_c5))
-error.append(np.std(slow_c6))
+# error.append(np.std(slow_c5))
+# error.append(np.std(slow_c6))
 
 plt.rc("font", size=45)
 plt.figure(figsize=(16,14))
@@ -152,8 +152,8 @@ all_data.append(slow_unicef)
 all_data.append(slow_sjf)
 all_data.append(slow_c3)
 all_data.append(slow_c4)
-all_data.append(slow_c5)
-all_data.append(slow_c6)
+# all_data.append(slow_c5)
+# all_data.append(slow_c6)
 
 all_medians = []
 
@@ -167,8 +167,8 @@ plt.plot(xticks[2:3], all_data[2:3], 'o', color='darkorange')
 plt.plot(xticks[3:4], all_data[3:4], 'o', color='darkorange')
 plt.plot(xticks[4:5], all_data[4:5], 'o', color='darkorange')
 plt.plot(xticks[5:6], all_data[5:6], 'o', color='darkorange')
-plt.plot(xticks[6:7], all_data[6:7], 'o', color='darkorange')
-plt.plot(xticks[7:8], all_data[7:8], 'o', color='darkorange')
+# plt.plot(xticks[6:7], all_data[6:7], 'o', color='darkorange')
+# plt.plot(xticks[7:8], all_data[7:8], 'o', color='darkorange')
 
 for p in all_data:
   all_medians.append(np.median(p))
@@ -185,8 +185,8 @@ axes.set_xticks([y+1 for y in range(len(all_data))])
 #axes.set_ylabel('Average Bounded Slowdown',  fontsize=45)
 
 # add x-tick labels
-xticklabels=['FCFS', 'WFP', 'UNI', 'SPT', 'F4', 'F3', 'F2', 'F1']
-plt.setp(axes, xticks=[y+1 for y in range(len(all_data))], xticklabels=['FCFS', 'WFP', 'UNI', 'SPT', 'F4', 'F3', 'F2', 'F1'])
+xticklabels=['FCFS', 'WFP', 'UNI', 'SPT', 'F2', 'Lin']
+plt.setp(axes, xticks=[y+1 for y in range(len(all_data))], xticklabels=['FCFS', 'WFP', 'UNI', 'SPT', 'F2', 'Lin'])
 
 plt.tick_params(axis='both', which='major', labelsize=45)
 plt.tick_params(axis='both', which='minor', labelsize=45)

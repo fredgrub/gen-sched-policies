@@ -109,10 +109,10 @@ for i in xrange(0,NUM_EXPERIMENTS): #1e7
   subprocess.call(['./sched-simulator-estimate-backfilling xmls/plat_day.xml xmls/deployment_hpc2n.xml -spt -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)  
   #subprocess.call(['./heuristics_simulator_submittime_day_estimates xmls/plat_day.xml xmls/deployment_blue.xml -c1 -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)
   #subprocess.call(['./heuristics_simulator_submittime_day_estimates xmls/plat_day.xml xmls/deployment_blue.xml -c2 -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)
-  subprocess.call(['./sched-simulator-estimate-backfilling xmls/plat_day.xml xmls/deployment_hpc2n.xml -f4 -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)
-  subprocess.call(['./sched-simulator-estimate-backfilling xmls/plat_day.xml xmls/deployment_hpc2n.xml -f3 -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)
+  # subprocess.call(['./sched-simulator-estimate-backfilling xmls/plat_day.xml xmls/deployment_hpc2n.xml -f4 -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)
+  # subprocess.call(['./sched-simulator-estimate-backfilling xmls/plat_day.xml xmls/deployment_hpc2n.xml -f3 -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)
   subprocess.call(['./sched-simulator-estimate-backfilling xmls/plat_day.xml xmls/deployment_hpc2n.xml -f2 -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)
-  subprocess.call(['./sched-simulator-estimate-backfilling xmls/plat_day.xml xmls/deployment_hpc2n.xml -f1 -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)
+  subprocess.call(['./sched-simulator-estimate-backfilling xmls/plat_day.xml xmls/deployment_hpc2n.xml -linear -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)
   #subprocess.call(['./nn_simulator simple_cluster.xml deployment_cluster.xml'], shell=True, stdout=_buffer)
   _buffer.close()
 
@@ -128,15 +128,15 @@ for i in xrange(0,NUM_EXPERIMENTS): #1e7
   #slow_c2.append(float(lines[5]))
   slow_c3.append(float(lines[4]))
   slow_c4.append(float(lines[5]))
-  slow_c5.append(float(lines[6]))
-  slow_c6.append(float(lines[7]))
+  # slow_c5.append(float(lines[6]))
+  # slow_c6.append(float(lines[7]))
   _buffer.close()
   
 
 #people = ('FCFS', 'LPT', 'WFP3', 'UNICEF', 'NN')
 #people = ('FCFS', 'SJF', 'WFP3', 'UNICEF', 'C1', 'C2', 'C3', 'C4', 'C5', 'C6')
 #people = ('EASY', 'WFP3', 'UNICEF', 'F1', 'F2')
-people = ('FCFS', 'WFP3', 'UNICEF', 'SJF', 'F4', 'F3', 'F2', 'F1')
+people = ('FCFS', 'WFP3', 'UNICEF', 'SJF', 'F2', 'Lin')
 y_pos = np.arange(len(people))
 
 performance = []
@@ -150,8 +150,8 @@ performance.append(np.mean(slow_sjf))
 #performance.append(np.mean(slow_c2))
 performance.append(np.mean(slow_c3))
 performance.append(np.mean(slow_c4))
-performance.append(np.mean(slow_c5))
-performance.append(np.mean(slow_c6))
+# performance.append(np.mean(slow_c5))
+# performance.append(np.mean(slow_c6))
 
 error = []
 error.append(np.std(slow_fcfs))
@@ -164,8 +164,8 @@ error.append(np.std(slow_sjf))
 #error.append(np.std(slow_c2))
 error.append(np.std(slow_c3))
 error.append(np.std(slow_c4))
-error.append(np.std(slow_c5))
-error.append(np.std(slow_c6))
+# error.append(np.std(slow_c5))
+# error.append(np.std(slow_c6))
 
 
 #plt.rc("font", size=30)
@@ -210,8 +210,8 @@ all_data.append(slow_unicef)
 all_data.append(slow_sjf)
 all_data.append(slow_c3)
 all_data.append(slow_c4)
-all_data.append(slow_c5)
-all_data.append(slow_c6)
+# all_data.append(slow_c5)
+# all_data.append(slow_c6)
 
 plt.rc("font", size=45)
 plt.figure(figsize=(16,14))
@@ -222,8 +222,8 @@ axes = plt.axes()
 
 new_all_data = np.array(all_data)
 
-OUT_POLICIES = 8
-MAX_OUT = [0,0,0,0,0,0,0,0]
+OUT_POLICIES = 6
+MAX_OUT = [0,0,0,0,0,0]
 
 OUT_CUT = 9
 
@@ -255,8 +255,8 @@ for i in range(0,OUT_POLICIES):
 
 plt.ylim((0,600))
 
-xoffset=[0.32,0.32,0.32,0.32,0.32,0.32,0.32,0.32]
-ylow=[550,550,550,550,550,550,550,550]
+xoffset=[0.32,0.32,0.32,0.32,0.32,0.32]
+ylow=[550,550,550,550,550,550]
 
 for i in range(0,OUT_POLICIES):
   output = ''
@@ -288,8 +288,8 @@ axes.set_xticks([y+1 for y in range(len(all_data))])
 #axes.set_ylabel('Average Bounded Slowdown',  fontsize=45)
 
 # add x-tick labels
-xticklabels=['FCFS', 'WFP', 'UNI', 'SPT', 'F4', 'F3', 'F2', 'F1']
-plt.setp(axes, xticks=[y+1 for y in range(len(all_data))], xticklabels=['FCFS', 'WFP', 'UNI', 'SPT', 'F4', 'F3', 'F2', 'F1'])
+xticklabels=['FCFS', 'WFP', 'UNI', 'SPT', 'F2', 'Lin']
+plt.setp(axes, xticks=[y+1 for y in range(len(all_data))], xticklabels=['FCFS', 'WFP', 'UNI', 'SPT', 'F2', 'Lin'])
 
 plt.tick_params(axis='both', which='major', labelsize=45)
 plt.tick_params(axis='both', which='minor', labelsize=45)

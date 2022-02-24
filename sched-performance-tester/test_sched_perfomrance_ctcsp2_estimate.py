@@ -101,10 +101,10 @@ for i in xrange(0,NUM_EXPERIMENTS): #1e7
   subprocess.call(['./sched-simulator-estimate-backfilling xmls/plat_day.xml xmls/deployment_ctcsp2.xml -wfp3 -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)
   subprocess.call(['./sched-simulator-estimate-backfilling xmls/plat_day.xml xmls/deployment_ctcsp2.xml -unicef -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)
   subprocess.call(['./sched-simulator-estimate-backfilling xmls/plat_day.xml xmls/deployment_ctcsp2.xml -spt -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)
-  subprocess.call(['./sched-simulator-estimate-backfilling xmls/plat_day.xml xmls/deployment_ctcsp2.xml -f4 -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)
-  subprocess.call(['./sched-simulator-estimate-backfilling xmls/plat_day.xml xmls/deployment_ctcsp2.xml -f3 -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)
+  #subprocess.call(['./sched-simulator-estimate-backfilling xmls/plat_day.xml xmls/deployment_ctcsp2.xml -f4 -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)
+  #subprocess.call(['./sched-simulator-estimate-backfilling xmls/plat_day.xml xmls/deployment_ctcsp2.xml -f3 -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)
   subprocess.call(['./sched-simulator-estimate-backfilling xmls/plat_day.xml xmls/deployment_ctcsp2.xml -f2 -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)
-  subprocess.call(['./sched-simulator-estimate-backfilling xmls/plat_day.xml xmls/deployment_ctcsp2.xml -f1 -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)  
+  subprocess.call(['./sched-simulator-estimate-backfilling xmls/plat_day.xml xmls/deployment_ctcsp2.xml -linear -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)  
   _buffer.close()
 
   _buffer = open("plot-temp.dat", "r")
@@ -115,8 +115,8 @@ for i in xrange(0,NUM_EXPERIMENTS): #1e7
   slow_sjf.append(float(lines[3]))  
   slow_c3.append(float(lines[4]))
   slow_c4.append(float(lines[5]))
-  slow_c5.append(float(lines[6]))
-  slow_c6.append(float(lines[7]))
+  #slow_c5.append(float(lines[6]))
+  #slow_c6.append(float(lines[7]))
   _buffer.close()
   
 performance = []
@@ -126,8 +126,8 @@ performance.append(np.mean(slow_unicef))
 performance.append(np.mean(slow_sjf))
 performance.append(np.mean(slow_c3))
 performance.append(np.mean(slow_c4))
-performance.append(np.mean(slow_c5))
-performance.append(np.mean(slow_c6))
+#performance.append(np.mean(slow_c5))
+#performance.append(np.mean(slow_c6))
 
 error = []
 error.append(np.std(slow_fcfs))
@@ -136,8 +136,8 @@ error.append(np.std(slow_unicef))
 error.append(np.std(slow_sjf))
 error.append(np.std(slow_c3))
 error.append(np.std(slow_c4))
-error.append(np.std(slow_c5))
-error.append(np.std(slow_c6))
+#error.append(np.std(slow_c5))
+#error.append(np.std(slow_c6))
 
 plt.rc("font", size=45)
 plt.figure(figsize=(16,14))
@@ -151,8 +151,8 @@ all_data.append(slow_unicef)
 all_data.append(slow_sjf)
 all_data.append(slow_c3)
 all_data.append(slow_c4)
-all_data.append(slow_c5)
-all_data.append(slow_c6)
+#all_data.append(slow_c5)
+#all_data.append(slow_c6)
 
 all_medians = []
 
@@ -160,8 +160,8 @@ axes = plt.axes()
 
 new_all_data = np.array(all_data)
 
-OUT_POLICIES = 8
-MAX_OUT = [1,1,0,1,0,0,0,0]
+OUT_POLICIES = 6
+MAX_OUT = [1,1,0,1,0,0]
 
 outliers = np.zeros((OUT_POLICIES,max(MAX_OUT)))
 
@@ -211,8 +211,8 @@ axes.set_xticks([y+1 for y in range(len(all_data))])
 #axes.set_ylabel('Average Bounded Slowdown',  fontsize=45)
 
 # add x-tick labels
-xticklabels=['FCFS', 'WFP', 'UNI', 'SPT', 'F4', 'F3', 'F2', 'F1']
-plt.setp(axes, xticks=[y+1 for y in range(len(all_data))], xticklabels=['FCFS', 'WFP', 'UNI', 'SPT', 'F4', 'F3', 'F2', 'F1'])
+xticklabels=['FCFS', 'WFP', 'UNI', 'SPT', 'F2', 'Lin']
+plt.setp(axes, xticks=[y+1 for y in range(len(all_data))], xticklabels=['FCFS', 'WFP', 'UNI', 'SPT', 'F2', 'Lin'])
 
 plt.tick_params(axis='both', which='major', labelsize=45)
 plt.tick_params(axis='both', which='minor', labelsize=45)
