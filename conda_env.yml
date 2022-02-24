@@ -1,9 +1,0 @@
-name: sched2
-channels:
-  - conda-forge
-  - default
-dependencies:
-  - python=2.7
-  - numpy
-  - matplotlib
-  - scipy
