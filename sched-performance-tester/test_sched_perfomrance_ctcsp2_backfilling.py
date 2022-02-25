@@ -6,10 +6,10 @@ import re
 import random
 import subprocess
 
-import matplotlib.pyplot as plt
-plt.rcdefaults()
-import matplotlib.pyplot as plt
 import matplotlib as mpl
+mpl.use('Agg')
+
+import matplotlib.pyplot as plt
 
 filename = "swfs/CTC-SP2-1996-3.1-cln.swf"
 

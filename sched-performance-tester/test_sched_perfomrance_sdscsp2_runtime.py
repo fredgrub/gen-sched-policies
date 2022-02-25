@@ -4,8 +4,9 @@ import re
 import random
 import subprocess
 
-import matplotlib.pyplot as plt
-plt.rcdefaults()
+import matplotlib as mpl
+mpl.use('Agg')
+
 import matplotlib.pyplot as plt
 
 # Iterate over the rows, splitting the label from the features. Convert labels
