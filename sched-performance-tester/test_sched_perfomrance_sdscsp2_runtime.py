@@ -48,6 +48,8 @@ slow_nn = []
 
 for line in file(filename):
   row = re.split(" +", line.lstrip(" "))
+  if row[0].startswith(";"):
+    continue
   #print("%f %d" % (float(row[4]), int(row[5])))  
   if int(row[4]) > 0 and int(row[3]) > 0:
     model_run_times.append(int(row[3]))

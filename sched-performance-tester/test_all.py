@@ -38,7 +38,7 @@ subprocess.call(['python test_sched_perfomrance_hpc2n_estimate.py'], shell=True)
 
 subprocess.call(['python test_sched_perfomrance_sdscsp2_estimate.py'], shell=True)
 
-subprocess.call(['python test_sched_perfomrance_curie_backfilling.py'], shell=True)
+#subprocess.call(['python test_sched_perfomrance_curie_backfilling.py'], shell=True)
 
 subprocess.call(['python test_sched_perfomrance_anl_backfilling.py'], shell=True)
 

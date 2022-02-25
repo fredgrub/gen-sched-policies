@@ -218,6 +218,8 @@ plt.setp(axes, xticks=[y+1 for y in range(len(all_data))], xticklabels=['FCFS', 
 plt.tick_params(axis='both', which='major', labelsize=45)
 plt.tick_params(axis='both', which='minor', labelsize=45)
 
+plt.savefig('plots/blue_e.pdf', format='pdf', dpi=1000,bbox_inches='tight')
+
 print('Experiment Statistics:')
 print('Medians:')
 i=0
