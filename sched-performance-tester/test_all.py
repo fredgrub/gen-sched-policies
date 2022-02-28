@@ -58,6 +58,6 @@ logs = [
 
 for index, test in enumerate(tests):
     log_file = logs[index]
-    with open('logs' + log_file + '.log', 'w+') as log:
+    with open('logs/' + log_file + '.log', 'w+') as log:
         subprocess.call(['python ' + test], shell=True, stdout=log)
 
