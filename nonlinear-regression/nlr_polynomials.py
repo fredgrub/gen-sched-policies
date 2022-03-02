@@ -30,41 +30,44 @@ def extract_data(filename):
 
 def linear(
     x,
-    d0, a1, b1, c1
+    t0, t1, t2, t3
     ):
     p, q, r = x
-    return d0 + a1 * p + b1 * q + c1 * r
+    return t0 + t1 * p + t2 * q + t3 * r
 
 def quadratic(
     x,
-    d0, a1, b1, c1,
-    a2, b2, c2, alp11
+    t0, t1, t2, t3,
+    t4, t5, t6, t7
     ):
     p, q, r = x
-    return linear(x, d0, a1, b1, c1) + \
-        a2 * p**2 + b2 * q**2 + c2 * r**2 + alp11 * p*q
+    return linear(x, t0, t1, t2, t3) + \
+        t4 * p**2 + t5 * q**2 + t6 * r**2 + t7 * p*q
 
 def cubic(
     x,
-    d0, a1, b1, c1,
-    a2, b2, c2, alp11,
-    a3, b3, c3, alp21, alp12
+    t0, t1, t2, t3,
+    t4, t5, t6, t7,
+    t8, t9, t10, t11,
+    t12, t13
     ):
     p, q, r = x
-    return quadratic(x, d0, a1, b1, c1, a2, b2, c2, alp11) + \
-        a3 * p**3 + b3 * q**3 + c3 * r**3 + alp21 * (p**2)*q + alp12 * p*(q**2)
+    return quadratic(x,t0, t1, t2, t3, t4, t5, t6, t7) +\
+        t8 * p**3 + t9 * q**3 + t10 * r**3 + t11 * (p**2)*q +\
+        t12 * p*(q**2) + t13 * (p*q)**2
 
 def quartic(
     x,
-    d0, a1, b1, c1,
-    a2, b2, c2, alp11,
-    a3, b3, c3, alp21, alp12,
-    a4, b4, c4, alp31, alp13, alp22
+    t0, t1, t2, t3,
+    t4, t5, t6, t7,
+    t8, t9, t10, t11,
+    t12, t13, t14, t15,
+    t16, t17, t18, t19
 ):
     p, q, r = x
-    return cubic(x, d0, a1, b1, c1, a2, b2, c2, alp11, a3, b3, c3, alp21, alp12) + \
-        a4 * p**4 + b4 * q**4 + c4 * r**4 + \
-        alp31 * (p**3)*q + alp13 * p*(q**3) + alp22 * (p*q)**2
+    return cubic(x,t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13)+\
+        t14 * p**4 + t15 * q**4 + t16 * r**4 + \
+        t17 * (p**3)*q + t18 * p*(q**3) + t19 * (p*q)**3
 
 def run_regression(func, p, q, r, score, num_data):
     # sigma
@@ -89,8 +92,11 @@ def run_regression(func, p, q, r, score, num_data):
     return popt, score
 
 def main():
-    p, q, r, score, num_data = extract_data(sys.argv[1])
+    score_file = sys.argv[1]
+    p, q, r, score, num_data = extract_data(score_file)
     #print(p[0], q[0], r[0], score[0], num_data)
+
+    print(score_file)
 
     polynomials = [linear, quadratic, cubic, quartic]
     poly_labels = ["Linear", "Quadratic", "Cubic", "Quartic"]
