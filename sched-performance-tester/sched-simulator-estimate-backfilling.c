@@ -49,6 +49,7 @@ msg_error_t test_all(const char *platform_file,
 #define QUADRATIC 12
 #define CUBIC 13
 #define QUARTIC 14
+#define SAF 15
 
 int BF = 0;
 
@@ -276,16 +277,19 @@ void sortTasksQueue(double* runtimes, int* cores, int* submit, double* req, int*
           h_values[i] = (-0.0155183403 * log10(req[i])) * (-0.0005149209 * cores[i]) + (0.0069596182 * log10(submit[i])); //256nodes
           break; 
       case LINEAR:
-          h_values[i] = 3.16688932E-02 + (1.24214915E-07 * runtimes[i]) + (3.10222317E-05 * cores[i]) + (-1.62730301E-07 * submit[i]);
+          h_values[i] = 3.16688932E-02 + (1.24214915E-07 * req[i]) + (3.10222317E-05 * cores[i]) + (-1.62730301E-07 * submit[i]);
           break;
       case QUADRATIC:
-          h_values[i] = 3.59070690E-02 + (3.57653837E-07 * runtimes[i]) + (-3.05321285E-05 * cores[i]) + (-4.32808767E-07 * submit[i]) + (-3.68598108E-12 * pow(runtimes[i], 2)) + (1.46361083E-07 * pow(cores[i], 2)) + (2.94999301E-12 * pow(submit[i], 2)) + (4.79106778E-10*runtimes[i] * cores[i]);
+          h_values[i] = 3.59070690E-02 + (3.57653837E-07 * req[i]) + (-3.05321285E-05 * cores[i]) + (-4.32808767E-07 * submit[i]) + (-3.68598108E-12 * pow(req[i], 2)) + (1.46361083E-07 * pow(cores[i], 2)) + (2.94999301E-12 * pow(submit[i], 2)) + (4.79106778E-10*req[i] * cores[i]);
           break;
       case CUBIC:
-          h_values[i] = 5.49939742e-02 + (-1.42358275e-06 * runtimes[i]) + (-1.66172060e-04 * cores[i]) + (-7.32530172e-07 * submit[i]) + (3.33805977e-11 * pow(runtimes[i], 2)) + (1.43074227e-07 * pow(cores[i], 2)) + (9.32866675e-12 * pow(submit[i], 2)) + (1.77599437e-08*runtimes[i] * cores[i]) + (-1.64597448e-16 * pow(runtimes[i], 3)) + (1.01906798e-09 * pow(cores[i], 3)) + (-3.19724119e-17 * pow(submit[i], 3)) + (-2.60511394e-13*pow(runtimes[i], 2) * cores[i]) + (-4.07107551e-11*runtimes[i] * pow(cores[i], 2)) + 5.83699122e-16*pow(runtimes[i]*cores[i], 2);
+          h_values[i] = 5.49939742e-02 + (-1.42358275e-06 * req[i]) + (-1.66172060e-04 * cores[i]) + (-7.32530172e-07 * submit[i]) + (3.33805977e-11 * pow(req[i], 2)) + (1.43074227e-07 * pow(cores[i], 2)) + (9.32866675e-12 * pow(submit[i], 2)) + (1.77599437e-08*req[i] * cores[i]) + (-1.64597448e-16 * pow(req[i], 3)) + (1.01906798e-09 * pow(cores[i], 3)) + (-3.19724119e-17 * pow(submit[i], 3)) + (-2.60511394e-13*pow(req[i], 2) * cores[i]) + (-4.07107551e-11*req[i] * pow(cores[i], 2)) + 5.83699122e-16*pow(req[i]*cores[i], 2);
           break;
       case QUARTIC:
-          h_values[i] = 4.60676052e-02 + (-7.76765755e-07 * runtimes[i]) + (-1.76313342e-05 * cores[i]) + (-6.47786293e-07 * submit[i]) + (3.68129776e-11 * pow(runtimes[i], 2)) + (5.30588161e-07 * pow(cores[i], 2)) + (5.43172102e-12 * pow(submit[i], 2)) + (-2.86914325e-09*runtimes[i] * cores[i]) + (-5.23476439e-16 * pow(runtimes[i], 3)) + (-6.68052736e-09 * pow(cores[i], 3)) + (2.74681557e-17 * pow(submit[i], 3)) + (7.14008267e-14*pow(runtimes[i], 2) * cores[i]) + (4.89098847e-11*runtimes[i] * pow(cores[i], 2)) + -3.81658916e-16*pow(runtimes[i]*cores[i], 2) + (2.29158387e-21 * pow(runtimes[i], 4)) + (1.79103008e-11 * pow(cores[i], 4)) + (-2.48090946e-22 * pow(submit[i], 3)) + (-8.60381994e-19*pow(runtimes[i], 3) * cores[i]) + (-1.02011767e-13*pow(cores[i], 3) * runtimes[i]) + (6.21802436e-24*pow(runtimes[i] * cores[i], 3));
+          h_values[i] = 4.60676052e-02 + (-7.76765755e-07 * req[i]) + (-1.76313342e-05 * cores[i]) + (-6.47786293e-07 * submit[i]) + (3.68129776e-11 * pow(req[i], 2)) + (5.30588161e-07 * pow(cores[i], 2)) + (5.43172102e-12 * pow(submit[i], 2)) + (-2.86914325e-09*req[i] * cores[i]) + (-5.23476439e-16 * pow(req[i], 3)) + (-6.68052736e-09 * pow(cores[i], 3)) + (2.74681557e-17 * pow(submit[i], 3)) + (7.14008267e-14*pow(req[i], 2) * cores[i]) + (4.89098847e-11*req[i] * pow(cores[i], 2)) + -3.81658916e-16*pow(req[i]*cores[i], 2) + (2.29158387e-21 * pow(req[i], 4)) + (1.79103008e-11 * pow(cores[i], 4)) + (-2.48090946e-22 * pow(submit[i], 3)) + (-8.60381994e-19*pow(req[i], 3) * cores[i]) + (-1.02011767e-13*pow(cores[i], 3) * req[i]) + (6.21802436e-24*pow(req[i] * cores[i], 3));
+          break;
+      case SAF:
+          h_values[i] = req[i] * cores[i];
           break;
     }
   if(VERBOSE)
@@ -794,6 +798,9 @@ int main(int argc, char *argv[])
       }
       if (strcmp(argv[i], "-quartic") == 0){
         chosen_policy = QUARTIC;
+      }
+      if (strcmp(argv[i], "-saf") == 0){
+        chosen_policy = SAF;
       }
       if (strcmp(argv[i], "-nt") == 0){
         number_of_tasks = atoi(argv[i+1]);

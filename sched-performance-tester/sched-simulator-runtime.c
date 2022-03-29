@@ -49,6 +49,7 @@ msg_error_t test_all(const char *platform_file,
 #define QUADRATIC 12
 #define CUBIC 13
 #define QUARTIC 14
+#define SAF 15
 
 
 int number_of_tasks = 0;
@@ -334,6 +335,9 @@ void sortTasksQueue(double* runtimes, int* cores, int* submit, int* orig_pos, in
           break;
       case QUARTIC:
           h_values[i] = 4.60676052e-02 + (-7.76765755e-07 * runtimes[i]) + (-1.76313342e-05 * cores[i]) + (-6.47786293e-07 * submit[i]) + (3.68129776e-11 * pow(runtimes[i], 2)) + (5.30588161e-07 * pow(cores[i], 2)) + (5.43172102e-12 * pow(submit[i], 2)) + (-2.86914325e-09*runtimes[i] * cores[i]) + (-5.23476439e-16 * pow(runtimes[i], 3)) + (-6.68052736e-09 * pow(cores[i], 3)) + (2.74681557e-17 * pow(submit[i], 3)) + (7.14008267e-14*pow(runtimes[i], 2) * cores[i]) + (4.89098847e-11*runtimes[i] * pow(cores[i], 2)) + -3.81658916e-16*pow(runtimes[i]*cores[i], 2) + (2.29158387e-21 * pow(runtimes[i], 4)) + (1.79103008e-11 * pow(cores[i], 4)) + (-2.48090946e-22 * pow(submit[i], 3)) + (-8.60381994e-19*pow(runtimes[i], 3) * cores[i]) + (-1.02011767e-13*pow(cores[i], 3) * runtimes[i]) + (6.21802436e-24*pow(runtimes[i] * cores[i], 3));
+          break;
+      case SAF:
+          h_values[i] = runtimes[i] * cores[i];
           break;
     }
   if(VERBOSE)
@@ -835,6 +839,9 @@ int main(int argc, char *argv[])
       }
       if (strcmp(argv[i], "-quartic") == 0){
         chosen_policy = QUARTIC;
+      }
+      if (strcmp(argv[i], "-saf") == 0){
+        chosen_policy = SAF;
       }
       if (strcmp(argv[i], "-nt") == 0){
         number_of_tasks = atoi(argv[i+1]);
