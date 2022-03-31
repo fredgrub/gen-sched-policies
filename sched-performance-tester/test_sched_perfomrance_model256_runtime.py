@@ -95,13 +95,12 @@ for i in xrange(0,NUM_EXPERIMENTS): #1e7
   subprocess.call(['./sched-simulator-runtime xmls/plat_day.xml xmls/deployment_day.xml -unicef -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)
   subprocess.call(['./sched-simulator-runtime xmls/plat_day.xml xmls/deployment_day.xml -spt -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)  
   # subprocess.call(['./sched-simulator-runtime xmls/plat_day.xml xmls/deployment_day.xml -f4 -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)
-  # subprocess.call(['./sched-simulator-runtime xmls/plat_day.xml xmls/deployment_day.xml -f3 -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)
-  # subprocess.call(['./sched-simulator-runtime xmls/plat_day.xml xmls/deployment_day.xml -f2 -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)
+  subprocess.call(['./sched-simulator-runtime xmls/plat_day.xml xmls/deployment_day.xml -saf -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)
+  subprocess.call(['./sched-simulator-runtime xmls/plat_day.xml xmls/deployment_day.xml -f2 -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)
   # subprocess.call(['./sched-simulator-runtime xmls/plat_day.xml xmls/deployment_day.xml -f1 -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)
-
-  subprocess.call(['./sched-simulator-runtime xmls/plat_day.xml xmls/deployment_day.xml -quartic -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)
-  subprocess.call(['./sched-simulator-runtime xmls/plat_day.xml xmls/deployment_day.xml -cubic -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)
-  subprocess.call(['./sched-simulator-runtime xmls/plat_day.xml xmls/deployment_day.xml -quadratic -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)
+  # subprocess.call(['./sched-simulator-runtime xmls/plat_day.xml xmls/deployment_day.xml -quartic -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)
+  # subprocess.call(['./sched-simulator-runtime xmls/plat_day.xml xmls/deployment_day.xml -cubic -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)
+  # subprocess.call(['./sched-simulator-runtime xmls/plat_day.xml xmls/deployment_day.xml -quadratic -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)
   subprocess.call(['./sched-simulator-runtime xmls/plat_day.xml xmls/deployment_day.xml -linear -nt '+str(number_of_tasks)], shell=True, stdout=_buffer)
 
   _buffer.close()
@@ -115,7 +114,7 @@ for i in xrange(0,NUM_EXPERIMENTS): #1e7
   slow_c3.append(float(lines[4]))
   slow_c4.append(float(lines[5]))
   slow_c5.append(float(lines[6]))
-  slow_c6.append(float(lines[7]))
+  # slow_c6.append(float(lines[7]))
   _buffer.close()
 
 performance = []
@@ -126,7 +125,7 @@ performance.append(np.mean(slow_sjf))
 performance.append(np.mean(slow_c3))
 performance.append(np.mean(slow_c4))
 performance.append(np.mean(slow_c5))
-performance.append(np.mean(slow_c6))
+# performance.append(np.mean(slow_c6))
 
 error = []
 error.append(np.std(slow_fcfs))
@@ -136,7 +135,7 @@ error.append(np.std(slow_sjf))
 error.append(np.std(slow_c3))
 error.append(np.std(slow_c4))
 error.append(np.std(slow_c5))
-error.append(np.std(slow_c6))
+# error.append(np.std(slow_c6))
 
 plt.rc("font", size=45)
 plt.figure(figsize=(16,14))
@@ -151,7 +150,7 @@ all_data.append(slow_sjf)
 all_data.append(slow_c3)
 all_data.append(slow_c4)
 all_data.append(slow_c5)
-all_data.append(slow_c6)
+# all_data.append(slow_c6)
 
 all_medians = []
 
@@ -180,7 +179,7 @@ plt.plot(xticks[3:4], new_all_data[3:4], 'o', color='darkorange')
 plt.plot(xticks[4:5], new_all_data[4:5], 'o', color='darkorange')
 plt.plot(xticks[5:6], new_all_data[5:6], 'o', color='darkorange')
 plt.plot(xticks[6:7], new_all_data[6:7], 'o', color='darkorange')
-plt.plot(xticks[7:8], new_all_data[7:8], 'o', color='darkorange')
+# plt.plot(xticks[7:8], new_all_data[7:8], 'o', color='darkorange')
 
 plt.ylim((0,17500))
 
@@ -210,8 +209,8 @@ axes.set_xlabel('Scheduling Policies', fontsize=45)
 axes.set_ylabel('Average Bounded Slowdown',  fontsize=45)
 
 # add x-tick labels
-xticklabels=['FCFS', 'WFP', 'UNI', 'SPT', 'Qua', 'Cub', 'Sq', 'Lin']
-#xticklabels=['FCFS', 'WFP', 'UNI', 'SPT', 'F2', 'Lin']
+#xticklabels=['FCFS', 'WFP', 'UNI', 'SPT', 'Qua', 'Cub', 'Sq', 'Lin']
+xticklabels=['FCFS', 'WFP', 'UNI', 'SPT', 'SAF', 'F2', 'Lin']
 plt.setp(axes, xticks=[y+1 for y in range(len(all_data))], xticklabels=xticklabels)
 
 plt.tick_params(axis='both', which='major', labelsize=45)

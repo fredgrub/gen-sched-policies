@@ -6,7 +6,7 @@ tests = [
     'test_sched_perfomrance_model256_runtime.py',
     'test_sched_perfomrance_model1024_runtime.py',
     'test_sched_perfomrance_model256_estimate.py',
-    'test_sched_perfomrance_model1024_estimate.py'
+    'test_sched_perfomrance_model1024_estimate.py',
     'test_sched_perfomrance_model256_backfilling.py',
     'test_sched_perfomrance_model1024_backfilling.py',
     'test_sched_perfomrance_curie_runtime.py',
@@ -58,6 +58,7 @@ logs = [
 
 for index, test in enumerate(tests):
     log_file = logs[index]
+    print('Running for %s' % log_file)
     with open('logs/' + log_file + '.log', 'w+') as log:
         subprocess.call(['python ' + test], shell=True, stdout=log)
 
